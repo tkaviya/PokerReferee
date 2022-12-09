@@ -15,7 +15,7 @@ public enum PokerHandRank {
     FLUSH(6), STRAIGHT(5), THREE_OF_A_KIND(4), TWO_PAIRS(3),
     ONE_PAIR(2), HIGH_CARD(1), NONE(0);
 
-    private int numPoints;
+    private final int numPoints;
 
     PokerHandRank(int numPoints) {
         this.numPoints = numPoints;
