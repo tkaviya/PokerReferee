@@ -4,7 +4,6 @@ import com.t3ratech.poker_referee.data.Player;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.logging.Logger;
 
 /***************************************************************************

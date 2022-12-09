@@ -56,9 +56,10 @@ public class PokerHand {
         // test if any card value has been found 3 times
         cardCount.values().stream().filter(c -> c == 3).findFirst().ifPresent(c -> this.pokerHandRank = THREE_OF_A_KIND);
         // if we have 3 of a kind, check to see if we also have a pair
-        if (this.pokerHandRank != THREE_OF_A_KIND) {
+        if (this.pokerHandRank == THREE_OF_A_KIND) {
             cardCount.values().stream().filter(c -> c == 2).findFirst().ifPresent(c -> this.pokerHandRank = FULL_HOUSE);
-        } else { return; }
+        }
+        if (this.pokerHandRank != NONE) { return; }
 
         if (isFlush()) { this.pokerHandRank = FLUSH; return; }
 
