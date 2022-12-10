@@ -23,7 +23,13 @@ public class PokerHand {
     private final Set<String> cardSuits = new HashSet<>();
 
     // the count of each value in the hand
-    private final HashMap<Integer, Integer> cardCount = new HashMap<>();
+    private final Map<Integer, Integer> cardCount = new HashMap<>();
+
+    // tracks the value of triples in the hand
+    private final List<Integer> triples = new ArrayList<>();
+
+    // tracks the value of pairs in the hand
+    private List<Integer> pairs = new ArrayList<>();
 
     // the rank of the hand
     private PokerHandRank pokerHandRank = PokerHandRank.NONE;
@@ -42,6 +48,14 @@ public class PokerHand {
         return cardValues;
     }
 
+    public List<Integer> getTriples() {
+        return triples;
+    }
+
+    public List<Integer> getPairs() {
+        return pairs;
+    }
+
     private void rankHand() {
         // test for rank starting with the highest going to the lowest
         if (isRoyalFlush()) { this.pokerHandRank = ROYAL_FLUSH; return; }
@@ -54,10 +68,17 @@ public class PokerHand {
         if (this.pokerHandRank != NONE) { return; }
 
         // test if any card value has been found 3 times
-        cardCount.values().stream().filter(c -> c == 3).findFirst().ifPresent(c -> this.pokerHandRank = THREE_OF_A_KIND);
+        cardCount.keySet().stream().filter(c -> cardCount.get(c) == 3).findFirst().ifPresent(c -> {
+            triples.add(c);
+            this.pokerHandRank = THREE_OF_A_KIND;
+        });
+
         // if we have 3 of a kind, check to see if we also have a pair
         if (this.pokerHandRank == THREE_OF_A_KIND) {
-            cardCount.values().stream().filter(c -> c == 2).findFirst().ifPresent(c -> this.pokerHandRank = FULL_HOUSE);
+            cardCount.keySet().stream().filter(c -> cardCount.get(c) == 2).findFirst().ifPresent(c -> {
+                pairs.add(c);
+                this.pokerHandRank = FULL_HOUSE;
+            });
         }
         if (this.pokerHandRank != NONE) { return; }
 
@@ -66,7 +87,8 @@ public class PokerHand {
         if (isStraight()) { this.pokerHandRank = STRAIGHT; return; }
 
         // test if any card value has been found 2 times
-        var pairs = cardCount.values().stream().filter(c -> c == 2).toList();
+        pairs = cardCount.keySet().stream().filter(c -> cardCount.get(c) == 2).toList();
+
         if (pairs.size() == 2) {
             this.pokerHandRank = TWO_PAIRS;
         } else if (pairs.size() == 1) {

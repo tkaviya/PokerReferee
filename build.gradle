@@ -38,7 +38,6 @@ dependencies {
     testImplementation 'org.springframework:spring-test'
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
-
 }
 
 tasks.withType(JavaCompile) {
