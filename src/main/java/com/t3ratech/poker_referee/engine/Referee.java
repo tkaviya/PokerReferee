@@ -28,7 +28,7 @@ public class Referee {
         } else if (p1Points < p2Points) {
             logger.info("Hand: " + hand + " | " + player2.getName() + " wins with " + p2Points + " points! " + player2.getCurrentHand().getHandRank().name());
             return player2;
-        } else { // if points are equal, look for the highest number of each player
+        } else if (p1Points == 0) { // if points are equal & there are no pairs, look for the highest number of each player
 
             // check cards starting with each players' highest, going downwards on each draw until a winner is found
             var p1CardValues = player1.getCurrentHand().getCardValues();
@@ -46,10 +46,11 @@ public class Referee {
                     return player2;
                 }
             }
-
+        } else {
             // invalid hand
             return null;
         }
+        return null;
     }
 
 }
