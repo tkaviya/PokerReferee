@@ -3,6 +3,7 @@ package com.t3ratech.poker_referee.engine;
 import com.t3ratech.poker_referee.data.Player;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Logger;
 
@@ -46,7 +47,7 @@ public class Referee {
                     return player2;
                 }
             }
-        } else {
+        } else { // points are equal, but they are not 0, so they have equal pairs
             // check who has the highest number card on the triples
             if (!player1.getCurrentHand().getTriples().isEmpty() && !player2.getCurrentHand().getTriples().isEmpty()) {
                 if (player1.getCurrentHand().getTriples().get(0) > player2.getCurrentHand().getTriples().get(0)) {
@@ -58,8 +59,8 @@ public class Referee {
 
             // check who has the highest number card on the pair
             if (!player1.getCurrentHand().getPairs().isEmpty() && !player2.getCurrentHand().getPairs().isEmpty()) {
-                var p1Pairs = player1.getCurrentHand().getPairs();
-                var p2Pairs = player2.getCurrentHand().getPairs();
+                var p1Pairs = new ArrayList<>(player1.getCurrentHand().getPairs());
+                var p2Pairs = new ArrayList<>(player2.getCurrentHand().getPairs());
 
                 // check who has the second-highest pair
                 if (p1Pairs.size() > 1 && p2Pairs.size() > 1) {

@@ -2,7 +2,6 @@ package com.t3ratech.poker_referee.engine;
 
 import com.t3ratech.poker_referee.data.Player;
 import com.t3ratech.poker_referee.data.PokerHand;
-import com.t3ratech.poker_referee.engine.Referee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -52,9 +51,9 @@ public class PokerEngine {
             player2.setCurrentHand(new PokerHand(p2Cards));
             var winner = referee.getWinner(gameString, player1, player2);
             if (winner.equals(player1)) {
-                winners.merge(1, 1, (a, b) -> winners.get(b) + 1);
+                winners.merge(1, 1, (a, b) -> winners.get(1) + 1);
             } else {
-                winners.merge(2, 1, (a, b) -> winners.get(b) + 1);
+                winners.merge(2, 1, (a, b) -> winners.get(2) + 1);
             }
         });
 
